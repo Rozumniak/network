@@ -1,0 +1,31 @@
+.nav {
+    grid-area: n;
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 10px;
+}
+
+.item a.active {
+    color: #333;
+    background-color: #b7d6f8;
+
+}
+
+.bestFriend {
+    display: flex;
+    gap: 1em;
+    color: white;
+    padding-top: 100px;
+}
+
+.navbar {
+    height: 800px;
+    background-color: #333;
+    opacity: 90%;
+    margin-right: 5px;
+    padding: 20px;
+    font-family: Font Awesome;
+}
