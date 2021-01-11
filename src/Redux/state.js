@@ -1,3 +1,5 @@
+import {renderEntireTree} from "../render";
+
 let state = {
     profilePage: {
         posts: [
@@ -10,6 +12,7 @@ let state = {
             {id: 7, text: "Component- is the great thing", likesCount: 1},
 
         ],
+        newPostText : 'kek'
 
     },
     messagesPage: {
@@ -22,6 +25,13 @@ let state = {
             {id: 1, message: "Hello world"},
             {id: 2, message: "Yo"},
             {id: 3, message: "Yo"},
+            {id: 3, message: "Yawawdaao"},
+            {id: 3, message: "Yawdawdwado"},
+            {id: 3, message: "Yawdawdwado"},
+            {id: 3, message: "Yawdawdwado"},
+            {id: 3, message: "Yawdawdwado"},
+            {id: 3, message: "Yawdawdwado"},
+            {id: 3, message: "Yawdawdwado"},
         ]
     },
     sidebar: [
@@ -30,4 +40,29 @@ let state = {
             {friendName: "Ruslan"}
         ]
 }
+window.state = state;
+export let addPost = ()=>{
+      let newPost = {
+        id: 5,
+        text: state.profilePage.newPostText,
+        likesCount: 0,
+    }
+    state.profilePage.posts.push(newPost);
+    updateNewPostText('');
+    renderEntireTree(state, addPost, sendMessage);
+}
+export let sendMessage = (messageText)=>{
+    let newMessage ={
+        id: 1,
+        message: messageText,
+    }
+    state.messagesPage.messages.push(newMessage);
+    renderEntireTree(state, addPost, sendMessage);
+}
+export let updateNewPostText = (newText)=>{
+       state.profilePage.newPostText= newText;
+    renderEntireTree(state, addPost, sendMessage);
+}
+
 export default state;
+
