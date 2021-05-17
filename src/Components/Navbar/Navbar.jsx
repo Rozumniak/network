@@ -2,13 +2,12 @@ import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import TopFriends from "./TopFriends/TopFriends";
-import Message from "../Dialogs/Message/Message";
+
 
 
 const Navbar = (props) => {
-
-    let friends = props.friends.map
-    (el => (<TopFriends friendName={el.friendName}/>));
+    let friends = props.sidebar.friendName.map
+    (el => (<TopFriends friendName={el.friendsName}/>));
     return (
         <div className={s.navbar}>
             <nav className={s.nav}>

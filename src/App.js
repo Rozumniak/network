@@ -1,38 +1,38 @@
 import React from 'react';
 import './App.css';
-import Header from './Components/Header/Header';
 import Navbar from './Components/Navbar/Navbar';
-import Profile from './Components/Profile/Profile';
+import ProfileContainer from './Components/Profile/ProfileContainer';
 import Dialogs from "./Components/Dialogs/Dialogs";
 import News from "./Components/News/News";
 import {Route} from "react-router-dom";
 import Music from "./Components/Music/Music";
 import Settings from "./Components/Settings/Settings";
-import Users from "./Components/Users/Users";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import NavbarContainer from "./Components/Navbar/NavbarContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
+import HeaderContainer from "./Components/Header/HeaderContainer";
+import Login from "./Components/Login/Login";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const App = (props) => {
+const App = () => {
 
     return (
 
-            <div className='app-wrapper'>
-                <Header/>
-                <Navbar friends={props.state.sidebar}/>
-                <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <Dialogs messages={props.state.messagesPage.messages}
-                                                                  dialogs={props.state.messagesPage.dialogs}
-                                                                  sendMessage={props.sendMessage}/>}/>
-                    <Route path='/profile' render={() => <Profile posts={props.state.profilePage.posts}
-                                                                  addPost={props.addPost}
-                                                                  newPostText={props.state.profilePage.newPostText}
-                                                                  updateNewPostText={props.updateNewPostText}/>}/>
-                    <Route path='/news' render={() => <News/>}/>
-                    <Route path='/music' render={() => <Music/>}/>
-                    <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='/users' render={() => <Users/>}/>
+        <div className='app-wrapper'>
+            <HeaderContainer/>
 
-                </div>
+            <div className='app-wrapper-content'>
+                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
+                <Route path='/news' render={() => <News/>}/>
+                <Route path='/music' render={() => <Music/>}/>
+                <Route path='/settings' render={() => <Settings/>}/>
+                <Route path='/users' render={() => <UsersContainer/>}/>
+                <Route path='/login' render={() => <Login/>}/>
             </div>
+            <NavbarContainer/>
+        </div>
 
     );
 
