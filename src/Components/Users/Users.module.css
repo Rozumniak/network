@@ -3,5 +3,5 @@
     height: 100px;
 }
 .selectedPage{
-    font-weight: bold;
+    background-color: red;
 }

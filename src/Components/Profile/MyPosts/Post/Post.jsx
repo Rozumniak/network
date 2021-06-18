@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Post.module.css';
-import Preloader from "../../../Preloader";
+import Preloader from "../../../Common/Preloader";
 import userPhoto from "../../../../img/1.png";
 const Post = (props) => {
     let addLike = () => {

@@ -1,8 +1,8 @@
-import {authMe, getProfile} from "../API/API";
+import {authMe, loginAPI} from "../API/API";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_AUTH_PROFILE = 'SET_AUTH_PROFILE';
-const SET_MY_USER_PROFILE = 'SET_MY_USER_PROFILE';
 
 
 let initialState = {
@@ -22,8 +22,8 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth: true,
+                ...action.payload,
+                ...action.payload.isAuth,
 
             }
         case SET_AUTH_PROFILE:
@@ -38,16 +38,39 @@ const authReducer = (state = initialState, action) => {
 
 
 }
-export const setAuthUserData = (id, login, email) => ({type: SET_USER_DATA, data: {id, login, email}});
+export const setAuthUserData = (id, login, email, isAuth) => ({
+    type: SET_USER_DATA,
+    payload: {id, login, email, isAuth}
+});
 export const setAuthUserProfile = (authProfile) => ({type: SET_AUTH_PROFILE, authProfile});
 
 
 export const authMeTh = () => (dispatch) => {
-    authMe().then(response => {
+   return  authMe().then(response => {
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data;
-            dispatch(setAuthUserData(id, login, email));
+            dispatch(setAuthUserData(id, login, email, true));
 
+        }
+
+    });
+}
+export const login = (email, password, rememberMe) => (dispatch) => {
+
+    loginAPI.login(email, password, rememberMe).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(authMeTh());
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+            dispatch(stopSubmit("login", {_error: message}));
+        }
+
+    });
+}
+export const logout = () => (dispatch) => {
+    loginAPI.logout().then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false));
         }
 
     });

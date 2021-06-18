@@ -17,11 +17,11 @@ const Users = (props) => {
     return <div>
         <div>
             {pages.map(p => {
-                return <Button variant="secondary" size="sm" className={props.currentPage === p && s.selectedPage}
+                return <button className={props.currentPage === p && s.selectedPage}
                                onClick={(e) => {
                                    props.onPageChange(p)
                                }}
-                >{p}</Button>
+                >{p}</button>
             })}
 
         </div>

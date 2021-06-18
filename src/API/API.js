@@ -20,16 +20,24 @@ export const userAPI = {
         return instance.post(`follow/${id}`)
     }
 }
-export const profileAPI ={
-    getProfile (userId) {
+export const profileAPI = {
+    getProfile(userId) {
         return instance.get(`profile/` + userId)
     },
-    getStatus (userId){
-        return instance.get(`profile/status/`+ userId)
+    getStatus(userId) {
+        return instance.get(`profile/status/` + userId)
     },
-   updateStatus (status){
+    updateStatus(status) {
         return instance.put(`profile/status`, {status: status})
-   }
+    }
+}
+export const loginAPI = {
+    login(email, password, rememberMe = false) {
+        return instance.post(`auth/login`, {email, password, rememberMe});
+    },
+    logout() {
+        return instance.delete(`auth/login`);
+    }
 }
 export const authMe = () => {
     return instance.get(`auth/me`)

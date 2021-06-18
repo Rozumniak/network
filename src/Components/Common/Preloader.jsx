@@ -1,5 +1,5 @@
 import React from 'react';
-import preloader from '../img/Curve-Loading.gif';
+import preloader from '../../img/Curve-Loading.gif';
 
 
 const Preloader = () => {

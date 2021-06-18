@@ -18,12 +18,6 @@ let mapDispatchToProps = (dispatch) =>{
             let action = addPostActionCreator(text);
             dispatch(action);
         },
-        onPostChange: (text) => {
-            let action1 = updateNewPostTextActionCreator(text);
-            dispatch(action1);
-
-
-      }
     }
 }
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);

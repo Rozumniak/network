@@ -1,35 +1,43 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
+import {Field, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utilits/validators/validators";
+import {Textarea} from "../../Common/FormControls";
 
+const maxLength10 = maxLengthCreator(10);
+
+const AddPostForm = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field validate={[required, maxLength10]} placeholder={"Post"} name={"Post"} component={Textarea}/>
+        </div>
+        <div>
+            <button>New post</button>
+        </div>
+    </form>
+}
+const AddPostReduxForm = reduxForm({
+    form: "addPost"
+})(AddPostForm);
 
 const MyPosts = (props) => {
     let posts = props.profilePage.posts.map(post => (<Post message={post.text}
                                                            like={post.likesCount} dispatch={props.dispatch}
                                                            profile={props.profile}/>))
-    let newPost = React.createRef();
-
-    let onAddPost = () => {
-        props.addPost();
-    }
-    let onPostChange = () => {
-        let text = newPost.current.value;
-        props.onPostChange(text);
-    }
     if (!props.profile) {
         return null
+    }
+    const onSubmit = (formData) => {
+        debugger
+        let postText = formData.Post
+        props.addPost(postText);
     }
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <div><textarea onChange={onPostChange} ref={newPost} value={props.profilePage.newPostText}/></div>
-                <div>
-                    <button onClick={onAddPost}>New post</button>
-                </div>
+            <AddPostReduxForm onSubmit={onSubmit}/>
 
-
-            </div>
             <div className={s.posts}>
                 {posts}
             </div>

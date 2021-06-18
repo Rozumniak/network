@@ -27,19 +27,12 @@ const profileReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_POST:
-            let body = state.newPostText;
             return {
                 ...state,
-                newPostText: '',
                 posts: [...state.posts,
-                    {id: 6, text: body, likesCount: 0}]
+                    {id: 6, text: action.newText, likesCount: 0}]
             }
 
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -72,7 +65,6 @@ export const getProfileTh = (userID) => (dispatch) => {
 export const getUserStatusTh = (userId) => (dispatch) => {
     profileAPI.getStatus(userId)
         .then(response => {
-            debugger
             dispatch(setUserStatus(response.data));
         });
 }
@@ -84,9 +76,7 @@ export const updateStatusTh = (status) => (dispatch) => {
             }
         });
 }
-export const addPostActionCreator = () => ({type: ADD_POST})
-export const updateNewPostTextActionCreator = (text) =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: text})
+export const addPostActionCreator = (text) => ({type: ADD_POST, newText: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
 
