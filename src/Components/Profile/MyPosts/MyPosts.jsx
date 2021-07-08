@@ -3,35 +3,51 @@ import Post from './Post/Post';
 import s from './MyPosts.module.css'
 import {Field, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utilits/validators/validators";
-import {Textarea} from "../../Common/FormControls";
+//import {Textarea} from "../../Common/FormControls";
+import {Form, Input, InputNumber, Button} from 'antd';
 
-const maxLength10 = maxLengthCreator(10);
+const layout = {
+    labelCol: {
+        span: 8,
+    },
+    wrapperCol: {
+        span: 16,
+    },
+};
+const {TextArea} = Input;
+const maxLength100 = maxLengthCreator(100);
 
 const AddPostForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field validate={[required, maxLength10]} placeholder={"Post"} name={"Post"} component={Textarea}/>
-        </div>
-        <div>
-            <button>New post</button>
-        </div>
-    </form>
+    return <Form {...layout} name="nest-messages" onFinish={props.onSubmit}>
+        <Form.Item name="post" size="large">
+            <Input.TextArea/>
+        </Form.Item>
+        <Form.Item wrapperCol={{...layout.wrapperCol, offset: 6,
+            span: 100}}>
+            <Button type="primary" htmlType="submit">
+                Отправить
+            </Button>
+        </Form.Item>
+    </Form>
 }
 const AddPostReduxForm = reduxForm({
     form: "addPost"
 })(AddPostForm);
 
-const MyPosts = (props) => {
-    let posts = props.profilePage.posts.map(post => (<Post message={post.text}
-                                                           like={post.likesCount} dispatch={props.dispatch}
-                                                           profile={props.profile}/>))
+const MyPosts = React.memo(props => {
+    console.log("RENDER");
+    let posts = [...props.profilePage.posts]
+        .reverse()
+        .map(post => (<Post message={post.text}
+                            like={post.likesCount} dispatch={props.dispatch}
+                            profile={props.profile}/>))
     if (!props.profile) {
         return null
     }
     const onSubmit = (formData) => {
-        debugger
-        let postText = formData.Post
+        let postText = formData.post
         props.addPost(postText);
+        formData.post = null;
     }
     return (
         <div className={s.postsBlock}>
@@ -44,6 +60,6 @@ const MyPosts = (props) => {
         </div>
 
     );
-}
+});
 
 export default MyPosts;

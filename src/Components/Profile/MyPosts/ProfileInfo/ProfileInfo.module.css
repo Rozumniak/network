@@ -5,3 +5,13 @@
     width: 200px;
 
 }
+.photoUpload{
+    width: 20em;
+}
+.editProfile{
+    float: right;
+    padding-right: 10px;
+}
+.contacts{
+    padding-left: 10px;
+}

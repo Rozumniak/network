@@ -1,26 +1,24 @@
-import {getProfile, profileAPI} from "../API/API";
-import {unfollow} from "./users-reducer";
+import {profileAPI} from "../API/API";
+
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
 const STATUS_UPDATE = 'STATUS_UPDATE';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
+const ACTIVATE_EDIT_MODE = 'ACTIVATE_EDIT_MODE';
+const DEACTIVATE_EDIT_MODE = 'DEACTIVATE_EDIT_MODE';
+
 
 let initialState = {
     posts: [
         {id: 1, text: "Hello world", likesCount: 12},
         {id: 2, text: "This is my first post", likesCount: 10},
-        {id: 3, text: "Yo, i know what is the .map", likesCount: 10},
-        {id: 4, text: "Motherfucker", likesCount: 10},
-        {id: 5, text: "Component- is the great thing", likesCount: 22},
-        {id: 6, text: "I know what is the props", likesCount: 30},
-        {id: 7, text: "Component- is the great thing", likesCount: 1},
 
     ],
-    newPostText: 'kek',
     profile: null,
     status: "",
+    profileEditMode: false,
 }
 const profileReducer = (state = initialState, action) => {
 
@@ -48,13 +46,25 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 statusInProgress: action.isUpdate
             }
-
+        case SAVE_PHOTO_SUCCESS:
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+        case ACTIVATE_EDIT_MODE:
+            return {
+                ...state,
+                profileEditMode: true
+            }
+        case DEACTIVATE_EDIT_MODE:
+            return {
+                ...state,
+                profileEditMode: false
+            }
 
         default:
             return state;
     }
-
-
 }
 
 export const getProfileTh = (userID) => (dispatch) => {
@@ -76,9 +86,48 @@ export const updateStatusTh = (status) => (dispatch) => {
             }
         });
 }
-export const addPostActionCreator = (text) => ({type: ADD_POST, newText: text})
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
-export const setUserStatus = (status) => ({type: SET_USER_STATUS, status})
+
+export const savePhoto = (photo) => (dispatch) => {
+    profileAPI.savePhoto(photo)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(savePhotoSuccess(response.data.data.photos));
+            }
+        });
+}
+
+export const saveProfile = (data) => (dispatch, getState) => {
+    dispatch(editModeOff());
+   const userID = getState().authReducer.id
+    profileAPI.saveProfile(data)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                profileAPI.getProfile(userID).then(response => {
+                    dispatch(setUserProfile(response.data));
+
+                });
+
+            }
+
+        });
+
+
+}
+export const activateProfileEditMode = () => (dispatch) => {
+
+    dispatch(editModeOn());
+}
+export const deactivateProfileEditMode = () => (dispatch) => {
+    dispatch(editModeOff());
+}
+
+
+export const addPostActionCreator = (text) => ({type: ADD_POST, newText: text});
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
+export const editModeOn = () => ({type: ACTIVATE_EDIT_MODE});
+export const editModeOff = () => ({type: DEACTIVATE_EDIT_MODE});
 
 
 export default profileReducer;

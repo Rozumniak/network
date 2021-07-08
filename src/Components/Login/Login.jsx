@@ -1,15 +1,77 @@
 import React from 'react'
-import {Field, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../utilits/validators/validators";
-import {Input} from "../Common/FormControls";
 import {Redirect} from "react-router-dom";
-import style from "./../Common/FormControls.module.css"
+import 'antd/dist/antd.css';
+import { Form, Input, Button, Checkbox } from 'antd';
 
-const maxLength20 = maxLengthCreator(20)
 
 const LoginForm = (props) => {
+
     return (
-        <form onSubmit={props.handleSubmit}>
+        <Form
+            name="basic"
+            labelCol={{
+                span: 3,
+            }}
+            wrapperCol={{
+                span: 10,
+            }}
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={props.onSubmit}
+
+
+        >
+
+            <Form.Item
+                label="Username"
+                name="username"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your username!',
+                    },
+                ]}
+            >
+                <Input/>
+            </Form.Item>
+
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                ]}
+            >
+                <Input.Password/>
+            </Form.Item>
+
+            <Form.Item
+                name="remember"
+                valuePropName="checked"
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+
+            <Form.Item
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </Form.Item>
+        </Form>
+        /*<form onSubmit={props.handleSubmit}>
             <div>
                 <Field placeholder={"Email"} name={"email"} component={Input} validate={[required, maxLength20]}/>
             </div>
@@ -26,15 +88,15 @@ const LoginForm = (props) => {
             <div>
                 <button>Login</button>
             </div>
-        </form>
+        </form>*/
     )
 };
-const LoginReduxForm = reduxForm({
+/*const LoginReduxForm = reduxForm({
     form: "login"
-})(LoginForm);
+})(LoginForm);*/
 const Login = (props) => {
-    const onSubmit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe);
+    const onSubmit = (values) => {
+        props.login(values.username, values.password, values.remember);
     }
 
     if (props.isAuth) {
@@ -42,7 +104,7 @@ const Login = (props) => {
     } else {
         return <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginForm onSubmit={onSubmit}/>
         </div>
     }
 }

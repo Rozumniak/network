@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Post.module.css';
-import Preloader from "../../../Common/Preloader";
+
+import {Button, } from 'antd';
+import { LikeOutlined } from '@ant-design/icons';
 import userPhoto from "../../../../img/1.png";
 const Post = (props) => {
+
     let addLike = () => {
 
     }
@@ -11,12 +14,12 @@ const Post = (props) => {
     }
     return (
         <div className={s.item}>
-            <img src={props.profile.photos.small != null ? props.profile.photos.small : userPhoto} className={s.userPhoto}/>
+            <img src={props.profile.photos.small || userPhoto} className={s.userPhoto}/>
             {props.message}
             <div>
                 <span>like {props.like}</span>
             </div>
-            <div><button onClick={addLike}>Like</button></div>
+            <div><Button onClick={addLike} icon={<LikeOutlined />}></Button></div>
         </div>
 
     );

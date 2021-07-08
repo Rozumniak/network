@@ -1,15 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 const ProfileStatusWithHooks = (props) => {
 
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
+
+    useEffect(() => {
+        setStatus(props.status);
+    },[props.status]);
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value);
 
     }
     const activateEditMode = () => {
-        setEditMode(true);
+        if (props.isOwner) { setEditMode(true)}
     }
     const deactivateEditMode = () => {
         setEditMode(false);
@@ -18,8 +22,10 @@ const ProfileStatusWithHooks = (props) => {
     return (
 
         <div>
+
             {!editMode &&
             <div>
+                <b>Status:   </b>
                 <span onDoubleClick={activateEditMode}>{props.status || "------"}</span>
             </div>
             }

@@ -2,6 +2,6 @@
     whidth: 200px;
     height: 100px;
 }
-.selectedPage{
-    background-color: red;
+.followButton{
+    padding: 5px;
 }

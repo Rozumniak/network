@@ -1,12 +1,17 @@
 import * as axios from "axios";
 
 const instance = axios.create({
+
     withCredentials: true,
     headers: {
-        'API-KEY': 'f91eee3f-9dff-4917-9b8c-59b790c9fee2'
+        'API-KEY': 'cc3bd8cc-4d54-4fd5-94a6-1a89051413f6'
     },
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    baseURL: `https://social-network.samuraijs.com/api/1.0/`,
+
 });
+
+
+
 export const userAPI = {
     getUsers(currentPage, pageSize) {
         return instance.get(`users?page=${currentPage} &count=${pageSize}`)
@@ -29,6 +34,14 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return instance.put(`profile/status`, {status: status})
+    },
+    savePhoto(photo) {
+        let formData = new FormData();
+        formData.append("image", photo)
+        return instance.put(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form/data'}})
+    },
+    saveProfile(profile) {
+        return instance.put(`profile`, profile)
     }
 }
 export const loginAPI = {
@@ -39,6 +52,7 @@ export const loginAPI = {
         return instance.delete(`auth/login`);
     }
 }
+
 export const authMe = () => {
     return instance.get(`auth/me`)
 }

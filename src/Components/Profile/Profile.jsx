@@ -11,7 +11,12 @@ const Profile = (props) => {
 
     return (
         <div className=''>
-            <ProfileInfo profile={props.profile} id={props.id} status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileInfo profile={props.profile} id={props.id} status={props.status} updateStatus={props.updateStatus}
+                         isOwner={props.isOwner} savePhoto={props.savePhoto}
+                         activateProfileEditMode={props.activateProfileEditMode}
+                         deactivateProfileEditMode={props.deactivateProfileEditMode} editMode={props.editMode}
+                         saveProfile={props.saveProfile}
+            />
             <MyPostsContainer/>
         </div>
     );

@@ -16,17 +16,9 @@
 
 }
 
-.bestFriend {
-    display: flex;
-    gap: 1em;
-    color: white;
-    padding-top: 100px;
-}
-
 .navbar {
     height: 800px;
     background-color: #333;
-    opacity: 90%;
     margin-right: 5px;
     padding: 20px;
     font-family: Font Awesome;
