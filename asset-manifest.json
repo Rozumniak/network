@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/test1/static/css/main.44852102.chunk.css",
-    "main.js": "/test1/static/js/main.2176485f.chunk.js",
-    "main.js.map": "/test1/static/js/main.2176485f.chunk.js.map",
-    "runtime-main.js": "/test1/static/js/runtime-main.2a1f53ac.js",
-    "runtime-main.js.map": "/test1/static/js/runtime-main.2a1f53ac.js.map",
+    "main.css": "/test1/static/css/main.dcff68c4.chunk.css",
+    "main.js": "/test1/static/js/main.a45d974a.chunk.js",
+    "main.js.map": "/test1/static/js/main.a45d974a.chunk.js.map",
+    "runtime-main.js": "/test1/static/js/runtime-main.aec67c00.js",
+    "runtime-main.js.map": "/test1/static/js/runtime-main.aec67c00.js.map",
     "static/css/2.10bc9b17.chunk.css": "/test1/static/css/2.10bc9b17.chunk.css",
     "static/js/2.2acd7186.chunk.js": "/test1/static/js/2.2acd7186.chunk.js",
     "static/js/2.2acd7186.chunk.js.map": "/test1/static/js/2.2acd7186.chunk.js.map",
-    "static/css/3.26c90b54.chunk.css": "/test1/static/css/3.26c90b54.chunk.css",
-    "static/js/3.e29b3dcc.chunk.js": "/test1/static/js/3.e29b3dcc.chunk.js",
-    "static/js/3.e29b3dcc.chunk.js.map": "/test1/static/js/3.e29b3dcc.chunk.js.map",
+    "static/css/3.50fe5bba.chunk.css": "/test1/static/css/3.50fe5bba.chunk.css",
+    "static/js/3.5db1724c.chunk.js": "/test1/static/js/3.5db1724c.chunk.js",
+    "static/js/3.5db1724c.chunk.js.map": "/test1/static/js/3.5db1724c.chunk.js.map",
     "index.html": "/test1/index.html",
     "static/css/2.10bc9b17.chunk.css.map": "/test1/static/css/2.10bc9b17.chunk.css.map",
-    "static/css/3.26c90b54.chunk.css.map": "/test1/static/css/3.26c90b54.chunk.css.map",
-    "static/css/main.44852102.chunk.css.map": "/test1/static/css/main.44852102.chunk.css.map",
+    "static/css/3.50fe5bba.chunk.css.map": "/test1/static/css/3.50fe5bba.chunk.css.map",
+    "static/css/main.dcff68c4.chunk.css.map": "/test1/static/css/main.dcff68c4.chunk.css.map",
     "static/js/2.2acd7186.chunk.js.LICENSE.txt": "/test1/static/js/2.2acd7186.chunk.js.LICENSE.txt",
     "static/media/1.png": "/test1/static/media/1.a2446033.png",
     "static/media/Curve-Loading.5e01ee79.gif": "/test1/static/media/Curve-Loading.5e01ee79.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.2a1f53ac.js",
+    "static/js/runtime-main.aec67c00.js",
     "static/css/2.10bc9b17.chunk.css",
     "static/js/2.2acd7186.chunk.js",
-    "static/css/main.44852102.chunk.css",
-    "static/js/main.2176485f.chunk.js"
+    "static/css/main.dcff68c4.chunk.css",
+    "static/js/main.a45d974a.chunk.js"
   ]
 }
