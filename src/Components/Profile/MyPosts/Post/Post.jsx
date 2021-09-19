@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import s from './Post.module.css';
 
-import {Button, } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
+import {Button,} from 'antd';
+import {LikeOutlined} from '@ant-design/icons';
 import userPhoto from "../../../../img/1.png";
+
 const Post = (props) => {
 
-    let addLike = () => {
+    let [islike, addLike] = useState(false)
 
-    }
-    if (!props.profile){
+    if (!props.profile) {
         return null
     }
     return (
@@ -19,7 +19,9 @@ const Post = (props) => {
             <div>
                 <span>like {props.like}</span>
             </div>
-            <div><Button onClick={addLike} icon={<LikeOutlined />}></Button></div>
+            {islike === false ?  <div className={s.likeButton}><button onClick={()=> addLike(true)} >Like</button></div>
+            : <div><button onClick={()=> addLike(false)} >like</button></div>}
+            <div><Button onClick={props.deletePost}> X </Button></div>
         </div>
 
     );

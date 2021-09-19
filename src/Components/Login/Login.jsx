@@ -6,7 +6,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 
 const LoginForm = (props) => {
 
-    return (
+    return (<div>
         <Form
             name="basic"
             labelCol={{
@@ -59,6 +59,27 @@ const LoginForm = (props) => {
             >
                 <Checkbox>Remember me</Checkbox>
             </Form.Item>
+            {props.captchaUrl && <Form.Item
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <img src={props.captchaUrl}/>
+            </Form.Item>}
+            {props.captchaUrl && <Form.Item
+                label="captcha"
+                name="captcha"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input Captcha!',
+                    },
+                ]}
+            >
+                <Input/>
+            </Form.Item>
+            }
 
             <Form.Item
                 wrapperCol={{
@@ -71,6 +92,8 @@ const LoginForm = (props) => {
                 </Button>
             </Form.Item>
         </Form>
+
+    </div>
         /*<form onSubmit={props.handleSubmit}>
             <div>
                 <Field placeholder={"Email"} name={"email"} component={Input} validate={[required, maxLength20]}/>
@@ -96,7 +119,7 @@ const LoginForm = (props) => {
 })(LoginForm);*/
 const Login = (props) => {
     const onSubmit = (values) => {
-        props.login(values.username, values.password, values.remember);
+        props.login(values.username, values.password, values.remember, values.captcha);
     }
 
     if (props.isAuth) {
@@ -104,7 +127,7 @@ const Login = (props) => {
     } else {
         return <div>
             <h1>Login</h1>
-            <LoginForm onSubmit={onSubmit}/>
+            <LoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
         </div>
     }
 }

@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import * as axios from "axios";
 import {connect} from "react-redux";
 import {
-    activateProfileEditMode, deactivateProfileEditMode,
+    activateProfileEditMode, deactivateProfileEditMode, deletePost,
     getProfileTh,
     getUserStatusTh,
     savePhoto, saveProfile,
@@ -23,6 +23,7 @@ class ProfileContainer extends React.Component {
         }
         this.props.getProfileTh(userID);
         this.props.getUserStatusTh(userID);
+        console.log(userID)
     }
 
     componentDidMount() {
@@ -43,7 +44,8 @@ class ProfileContainer extends React.Component {
                          updateStatus={this.props.updateStatusTh} isOwner={!this.props.match.params.userID}
                          savePhoto={this.props.savePhoto} activateProfileEditMode={this.props.activateProfileEditMode}
                          deactivateProfileEditMode={this.props.deactivateProfileEditMode}
-                         editMode={this.props.editMode} saveProfile={this.props.saveProfile}/>
+                         editMode={this.props.editMode} saveProfile={this.props.saveProfile}
+                         deletePost={this.props.deletePost}/>
             </div>
         );
     }

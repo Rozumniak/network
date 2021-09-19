@@ -3,13 +3,16 @@ import {authMeTh} from "./auth-reducer";
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 
-
-let initialState = {
-    initialized: false,
-
+export type InitialStateType={
+    initialized: boolean,
 
 }
-const appReducer = (state = initialState, action) => {
+
+let initialState: InitialStateType = {
+    initialized: false,
+
+}
+const appReducer = (state = initialState, action: any): InitialStateType => {
 
 
     switch (action.type) {
@@ -25,11 +28,14 @@ const appReducer = (state = initialState, action) => {
 
 
 }
-export const initializedSuccess = () => ({
+ type InitializedSuccessActionType={
+    type: typeof INITIALIZED_SUCCESS
+}
+export const initializedSuccess = (): InitializedSuccessActionType => ({
     type: INITIALIZED_SUCCESS,
 });
 
-export const initializeApp = () => (dispatch) => {
+export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(authMeTh());
 promise.then(()=>{
     dispatch(initializedSuccess());

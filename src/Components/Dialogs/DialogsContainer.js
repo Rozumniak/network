@@ -4,7 +4,16 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/WithAuthRedirect";
 import {compose} from "redux";
+import MyPosts from "../Profile/MyPosts/MyPosts";
 
+class DialogsContainer extends React.Component {
+    render() {
+        return <div>
+            <Dialogs messagesPage={this.props.messagesPage} sendMessage={this.props.sendMessageActionCreator}/>
+        </div>
+    }
+
+}
 
 let mapStateToProps = (state) => {
     return {
@@ -12,18 +21,10 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        sendMessage: (text) => {
-            dispatch(sendMessageActionCreator(text));
-        },
-
-    }
-}
 
 
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
-withAuthRedirect
-)(Dialogs);
+    connect(mapStateToProps, {sendMessageActionCreator}),
+
+)(DialogsContainer);

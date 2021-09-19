@@ -5,6 +5,7 @@ import {Field, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utilits/validators/validators";
 //import {Textarea} from "../../Common/FormControls";
 import {Form, Input, InputNumber, Button} from 'antd';
+import {deletePost} from "../../../Redux/profile-reducer";
 
 const layout = {
     labelCol: {
@@ -19,7 +20,12 @@ const maxLength100 = maxLengthCreator(100);
 
 const AddPostForm = (props) => {
     return <Form {...layout} name="nest-messages" onFinish={props.onSubmit}>
-        <Form.Item name="post" size="large">
+        <Form.Item name="post" size="large" rules={[
+            {
+                required: true,
+                message: 'Please input text!',
+            },
+        ]}>
             <Input.TextArea/>
         </Form.Item>
         <Form.Item wrapperCol={{...layout.wrapperCol, offset: 6,
@@ -38,9 +44,9 @@ const MyPosts = React.memo(props => {
     console.log("RENDER");
     let posts = [...props.profilePage.posts]
         .reverse()
-        .map(post => (<Post message={post.text}
+        .map((post, i) => <div key={i}><Post message={post.text}
                             like={post.likesCount} dispatch={props.dispatch}
-                            profile={props.profile}/>))
+                            profile={props.profile} deletePost={props.deletePost}/></div>)
     if (!props.profile) {
         return null
     }

@@ -21,15 +21,17 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
     FormOutlined,
     TeamOutlined,
-    UploadOutlined,
 } from '@ant-design/icons';
 import s from "./Components/Navbar/Navbar.module.css";
 import {logout} from "./Redux/auth-reducer";
-import ProfileStatusWithHooks from "./Components/Profile/MyPosts/ProfileInfo/ProfileStatusWithHooks";
+import {withSuspense} from "./HOC/WithSuspense";
 
+
+const Chat = React.lazy(()=>import('./Components/Chat/ChatContainer'))
+
+const SuspendedChat = withSuspense(Chat)
 
 const {Header, Sider, Content} = Layout;
 
@@ -51,6 +53,7 @@ class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledError);
+        console.log(this.props.userID)
     }
 
     componentWillUnmount() {
@@ -73,7 +76,10 @@ class App extends React.Component {
                         <Menu.Item key="2" icon={<FormOutlined/>}>
                             <NavLink to="/dialogs" activeClassName={s.active}>Сообщения</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<TeamOutlined/>}>
+                        <Menu.Item key="3" icon={<FormOutlined/>}>
+                            <NavLink to="/chat" activeClassName={s.active}>Чат</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="4" icon={<TeamOutlined/>}>
                             <NavLink to="/users" activeClassName={s.active}> Пользователи</NavLink>
                         </Menu.Item>
 
@@ -104,7 +110,7 @@ class App extends React.Component {
                             <Route path='/' exact><Redirect to='/profile'/></Route>
                             <Route path='/dialogs' render={() => <DialogsContainer/>}/>
                             <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
-                            <Route path='/news' render={() => <News/>}/>
+                            <Route path='/chat' render={() => <SuspendedChat userID={this.props.authUserProfile}/>}/>
                             <Route path='/music' render={() => <Music/>}/>
                             <Route path='/settings' render={() => <Settings/>}/>
                             <Route path='/users' render={() => <UsersContainer/>}/>
@@ -125,7 +131,9 @@ const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
     login: state.authReducer.login,
     isAuth: state.authReducer.isAuth,
-    authUserProfile: state.authReducer.authUserProfile
+    authUserProfile: state.authReducer.authUserProfile,
+    userID: state.authReducer.id,
+
 })
 
 export default compose(

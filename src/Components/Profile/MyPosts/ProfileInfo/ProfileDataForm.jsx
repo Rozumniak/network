@@ -8,6 +8,7 @@ import {reduxForm} from "redux-form";
 const ProfileDataForm = ({handleSubmit, props, profile}) => {
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
+            debugger
             props.savePhoto(e.target.files[0])
         }
     }

@@ -9,14 +9,15 @@ class LoginContainer extends React.Component {
 
     render() {
         return (
-            <div><Login login={this.props.login} isAuth={this.props.isAuth}/></div>
+            <div><Login login={this.props.login} isAuth={this.props.isAuth} captchaUrl={this.props.captchaUrl}/></div>
         );
     }
 }
 
 
 const mapStateToProps = (state) => ({
-    isAuth: state.authReducer.isAuth
+    isAuth: state.authReducer.isAuth,
+    captchaUrl: state.authReducer.captchaUrl,
 })
 
 export default compose(

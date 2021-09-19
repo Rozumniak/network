@@ -1,55 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Dialogs.module.css';
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
-import {Field, reduxForm} from "redux-form";
-import {Textarea} from "../Common/FormControls";
-import {maxLengthCreator, required} from "../../utilits/validators/validators";
+import ScrollToBottom from 'react-scroll-to-bottom';
+import {Button} from "antd";
 
-const maxLength50 = maxLengthCreator(50);
-const MessageForm = (props) => {
 
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name={"message"} component={Textarea} validate={[required, maxLength50]}/>
-            </div>
-            <div>
-                <button>Отправить</button>
-            </div>
-        </form>
-    )
-}
-const MessageReduxForm = reduxForm({
-    form: "message"
-})(MessageForm);
 const Dialogs = (props) => {
 
 
-    let messages = props.messagesPage.messages.map
-    (el => (<Message messages={el.message}/>));
+    let [message, editMessage] = useState('');
+    //   let [messages, sendMessage] = useState([{message1: ''}]);
+    //   console.log(messages)
+
+    let messages1 = props.messagesPage.messages.map
+    ((el, i) => (<div key={i}><Message messages={el.message}/></div>));
 
     let dialogs = props.messagesPage.dialogs.map(dialog =>
         (<Dialog name={dialog.name} activeClassName={s.active} id={dialog.id}/>));
-
-
-    let onSubmit = (formData) => {
-        let text = formData.message
-        props.sendMessage(text);
-        formData.message = null;
-
+    const nullMessage = () => {
+        editMessage(null)
     }
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItem}>
-                {dialogs}
-            </div>
-            <div className={s.messages}>
-                {messages}
-                <MessageReduxForm onSubmit={onSubmit}/>
-            </div>
 
+        <div className={s.outerContainer}>
+            {/* <div className={s.dialogs}>
+                <div className={s.dialogsItem}>
+                    {dialogs}
+                </div>
+            </div>*/}
+            <div className={s.container}>
+                <ScrollToBottom  className={s.messages}>
+                    {messages1}
+                </ScrollToBottom >
+                <form className={s.form}>
+                    <input className={s.input} placeholder={"Сообщение . . ."}
+                           value={message}
+                           type={"text"}
+                           onKeyPress={event => event.key === 'Enter'
+                               && message  ? (event) => props.sendMessage(message)
+                                   && editMessage("") : null }
+                           onChange={(event) => editMessage(event.target.value)}/>
+
+                        <button className={s.sendButton}
+                                onClick={message  ? (event) => props.sendMessage(message)
+                                    && editMessage("") : null }>
+                            Send
+                        </button>
+                </form>
+            </div>
         </div>
+
     );
 }
+
 export default Dialogs;
